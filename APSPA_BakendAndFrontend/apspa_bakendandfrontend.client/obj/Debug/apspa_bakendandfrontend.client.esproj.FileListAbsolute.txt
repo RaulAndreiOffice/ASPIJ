@@ -1,0 +1,1 @@
+C:\Users\raulb\Documents\Licienta\Proiect\APSPA_BakendAndFrontend\apspa_bakendandfrontend.client\obj\Debug\apspa_bakendandfrontend.client.esproj.CoreCompileInputs.cache

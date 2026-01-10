@@ -1,0 +1,177 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\raulb\\Documents\\Licienta\\Proiect\\APSPA_BakendAndFrontend\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{D0EEFF51-D82E-4124-A8B2-F0E76A0F22A8}|APSPA_BakendAndFrontend.Server\\APSPA_BakendAndFrontend.Server.csproj|c:\\users\\raulb\\documents\\licienta\\proiect\\apspa_bakendandfrontend\\apspa_bakendandfrontend.server\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{D0EEFF51-D82E-4124-A8B2-F0E76A0F22A8}|APSPA_BakendAndFrontend.Server\\APSPA_BakendAndFrontend.Server.csproj|solutionrelative:apspa_bakendandfrontend.server\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D0EEFF51-D82E-4124-A8B2-F0E76A0F22A8}|APSPA_BakendAndFrontend.Server\\APSPA_BakendAndFrontend.Server.csproj|c:\\users\\raulb\\documents\\licienta\\proiect\\apspa_bakendandfrontend\\apspa_bakendandfrontend.server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D0EEFF51-D82E-4124-A8B2-F0E76A0F22A8}|APSPA_BakendAndFrontend.Server\\APSPA_BakendAndFrontend.Server.csproj|solutionrelative:apspa_bakendandfrontend.server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D0EEFF51-D82E-4124-A8B2-F0E76A0F22A8}|APSPA_BakendAndFrontend.Server\\APSPA_BakendAndFrontend.Server.csproj|c:\\users\\raulb\\documents\\licienta\\proiect\\apspa_bakendandfrontend\\apspa_bakendandfrontend.server\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D0EEFF51-D82E-4124-A8B2-F0E76A0F22A8}|APSPA_BakendAndFrontend.Server\\APSPA_BakendAndFrontend.Server.csproj|solutionrelative:apspa_bakendandfrontend.server\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D0EEFF51-D82E-4124-A8B2-F0E76A0F22A8}|APSPA_BakendAndFrontend.Server\\APSPA_BakendAndFrontend.Server.csproj|c:\\users\\raulb\\documents\\licienta\\proiect\\apspa_bakendandfrontend\\apspa_bakendandfrontend.server\\model\\anomaly.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D0EEFF51-D82E-4124-A8B2-F0E76A0F22A8}|APSPA_BakendAndFrontend.Server\\APSPA_BakendAndFrontend.Server.csproj|solutionrelative:apspa_bakendandfrontend.server\\model\\anomaly.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D0EEFF51-D82E-4124-A8B2-F0E76A0F22A8}|APSPA_BakendAndFrontend.Server\\APSPA_BakendAndFrontend.Server.csproj|c:\\users\\raulb\\documents\\licienta\\proiect\\apspa_bakendandfrontend\\apspa_bakendandfrontend.server\\model\\device.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D0EEFF51-D82E-4124-A8B2-F0E76A0F22A8}|APSPA_BakendAndFrontend.Server\\APSPA_BakendAndFrontend.Server.csproj|solutionrelative:apspa_bakendandfrontend.server\\model\\device.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D0EEFF51-D82E-4124-A8B2-F0E76A0F22A8}|APSPA_BakendAndFrontend.Server\\APSPA_BakendAndFrontend.Server.csproj|c:\\users\\raulb\\documents\\licienta\\proiect\\apspa_bakendandfrontend\\apspa_bakendandfrontend.server\\model\\measurement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D0EEFF51-D82E-4124-A8B2-F0E76A0F22A8}|APSPA_BakendAndFrontend.Server\\APSPA_BakendAndFrontend.Server.csproj|solutionrelative:apspa_bakendandfrontend.server\\model\\measurement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D0EEFF51-D82E-4124-A8B2-F0E76A0F22A8}|APSPA_BakendAndFrontend.Server\\APSPA_BakendAndFrontend.Server.csproj|c:\\users\\raulb\\documents\\licienta\\proiect\\apspa_bakendandfrontend\\apspa_bakendandfrontend.server\\model\\trainingsession.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D0EEFF51-D82E-4124-A8B2-F0E76A0F22A8}|APSPA_BakendAndFrontend.Server\\APSPA_BakendAndFrontend.Server.csproj|solutionrelative:apspa_bakendandfrontend.server\\model\\trainingsession.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D0EEFF51-D82E-4124-A8B2-F0E76A0F22A8}|APSPA_BakendAndFrontend.Server\\APSPA_BakendAndFrontend.Server.csproj|c:\\users\\raulb\\documents\\licienta\\proiect\\apspa_bakendandfrontend\\apspa_bakendandfrontend.server\\model\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D0EEFF51-D82E-4124-A8B2-F0E76A0F22A8}|APSPA_BakendAndFrontend.Server\\APSPA_BakendAndFrontend.Server.csproj|solutionrelative:apspa_bakendandfrontend.server\\model\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D0EEFF51-D82E-4124-A8B2-F0E76A0F22A8}|APSPA_BakendAndFrontend.Server\\APSPA_BakendAndFrontend.Server.csproj|c:\\users\\raulb\\documents\\licienta\\proiect\\apspa_bakendandfrontend\\apspa_bakendandfrontend.server\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{D0EEFF51-D82E-4124-A8B2-F0E76A0F22A8}|APSPA_BakendAndFrontend.Server\\APSPA_BakendAndFrontend.Server.csproj|solutionrelative:apspa_bakendandfrontend.server\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\raulb\\Documents\\Licienta\\Proiect\\APSPA_BakendAndFrontend\\APSPA_BakendAndFrontend.Server\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "APSPA_BakendAndFrontend.Server\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\raulb\\Documents\\Licienta\\Proiect\\APSPA_BakendAndFrontend\\APSPA_BakendAndFrontend.Server\\Properties\\launchSettings.json",
+              "RelativeToolTip": "APSPA_BakendAndFrontend.Server\\Properties\\launchSettings.json",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAABoAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-12-10T09:07:20.069Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Device.cs",
+              "DocumentMoniker": "C:\\Users\\raulb\\Documents\\Licienta\\Proiect\\APSPA_BakendAndFrontend\\APSPA_BakendAndFrontend.Server\\model\\Device.cs",
+              "RelativeDocumentMoniker": "APSPA_BakendAndFrontend.Server\\model\\Device.cs",
+              "ToolTip": "C:\\Users\\raulb\\Documents\\Licienta\\Proiect\\APSPA_BakendAndFrontend\\APSPA_BakendAndFrontend.Server\\model\\Device.cs",
+              "RelativeToolTip": "APSPA_BakendAndFrontend.Server\\model\\Device.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-10T08:46:13.043Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Anomaly.cs",
+              "DocumentMoniker": "C:\\Users\\raulb\\Documents\\Licienta\\Proiect\\APSPA_BakendAndFrontend\\APSPA_BakendAndFrontend.Server\\model\\Anomaly.cs",
+              "RelativeDocumentMoniker": "APSPA_BakendAndFrontend.Server\\model\\Anomaly.cs",
+              "ToolTip": "C:\\Users\\raulb\\Documents\\Licienta\\Proiect\\APSPA_BakendAndFrontend\\APSPA_BakendAndFrontend.Server\\model\\Anomaly.cs",
+              "RelativeToolTip": "APSPA_BakendAndFrontend.Server\\model\\Anomaly.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-10T08:48:35.856Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\raulb\\Documents\\Licienta\\Proiect\\APSPA_BakendAndFrontend\\APSPA_BakendAndFrontend.Server\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "APSPA_BakendAndFrontend.Server\\Data\\AppDbContext.cs",
+              "ToolTip": "C:\\Users\\raulb\\Documents\\Licienta\\Proiect\\APSPA_BakendAndFrontend\\APSPA_BakendAndFrontend.Server\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "APSPA_BakendAndFrontend.Server\\Data\\AppDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-10T08:36:57.068Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\raulb\\Documents\\Licienta\\Proiect\\APSPA_BakendAndFrontend\\APSPA_BakendAndFrontend.Server\\Program.cs",
+              "RelativeDocumentMoniker": "APSPA_BakendAndFrontend.Server\\Program.cs",
+              "ToolTip": "C:\\Users\\raulb\\Documents\\Licienta\\Proiect\\APSPA_BakendAndFrontend\\APSPA_BakendAndFrontend.Server\\Program.cs",
+              "RelativeToolTip": "APSPA_BakendAndFrontend.Server\\Program.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAswCYAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-09T14:31:08.287Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Measurement.cs",
+              "DocumentMoniker": "C:\\Users\\raulb\\Documents\\Licienta\\Proiect\\APSPA_BakendAndFrontend\\APSPA_BakendAndFrontend.Server\\model\\Measurement.cs",
+              "RelativeDocumentMoniker": "APSPA_BakendAndFrontend.Server\\model\\Measurement.cs",
+              "ToolTip": "C:\\Users\\raulb\\Documents\\Licienta\\Proiect\\APSPA_BakendAndFrontend\\APSPA_BakendAndFrontend.Server\\model\\Measurement.cs",
+              "RelativeToolTip": "APSPA_BakendAndFrontend.Server\\model\\Measurement.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-10T08:47:41.888Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "TrainingSession.cs",
+              "DocumentMoniker": "C:\\Users\\raulb\\Documents\\Licienta\\Proiect\\APSPA_BakendAndFrontend\\APSPA_BakendAndFrontend.Server\\model\\TrainingSession.cs",
+              "RelativeDocumentMoniker": "APSPA_BakendAndFrontend.Server\\model\\TrainingSession.cs",
+              "ToolTip": "C:\\Users\\raulb\\Documents\\Licienta\\Proiect\\APSPA_BakendAndFrontend\\APSPA_BakendAndFrontend.Server\\model\\TrainingSession.cs",
+              "RelativeToolTip": "APSPA_BakendAndFrontend.Server\\model\\TrainingSession.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAuwCQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-10T08:46:55.561Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\raulb\\Documents\\Licienta\\Proiect\\APSPA_BakendAndFrontend\\APSPA_BakendAndFrontend.Server\\model\\User.cs",
+              "RelativeDocumentMoniker": "APSPA_BakendAndFrontend.Server\\model\\User.cs",
+              "ToolTip": "C:\\Users\\raulb\\Documents\\Licienta\\Proiect\\APSPA_BakendAndFrontend\\APSPA_BakendAndFrontend.Server\\model\\User.cs",
+              "RelativeToolTip": "APSPA_BakendAndFrontend.Server\\model\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-10T08:44:13.296Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\raulb\\Documents\\Licienta\\Proiect\\APSPA_BakendAndFrontend\\APSPA_BakendAndFrontend.Server\\appsettings.json",
+              "RelativeDocumentMoniker": "APSPA_BakendAndFrontend.Server\\appsettings.json",
+              "ToolTip": "C:\\Users\\raulb\\Documents\\Licienta\\Proiect\\APSPA_BakendAndFrontend\\APSPA_BakendAndFrontend.Server\\appsettings.json",
+              "RelativeToolTip": "APSPA_BakendAndFrontend.Server\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-12-10T08:30:14.985Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
