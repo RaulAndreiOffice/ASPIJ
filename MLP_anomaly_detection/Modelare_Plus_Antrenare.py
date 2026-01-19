@@ -74,6 +74,14 @@ model.compile(
     metrics=["mae"]
 )
 
+history = model.fit(
+    x_train_scaled, y_train,
+    validation_data=(x_val_scaled, y_val),
+    epochs=50,
+    batch_size=32,
+    verbose=1
+)
+
 model.summary()
 
 model.save("hr_model.h5")
