@@ -65,7 +65,8 @@ model = keras.Sequential([
     layers.Input(shape=(input_dim,)),
     layers.Dense(64, activation='relu'),
     layers.Dense(32, activation='relu'),
-    layers.Dense(1, activation='relu'),
+    #layers.Dense(1, activation='relu'),
+    layers.Dense(1, activation='linear'),
 ])
 
 model.compile(
@@ -84,10 +85,61 @@ history = model.fit(
 
 model.summary()
 
-model.save("hr_model.h5")
+# Learning curve (Train vs Validation Loss)
+plt.figure(figsize = (10,6))
+plt.plot(history.history['loss'], label='Train loss')
+plt.plot(history.history['val_loss'], label='Validation loss')
+plt.title('Learning Curve: Train vs Validation')
+plt.xlabel('Epoci')
+plt.ylabel('Eroare ')
+plt.legend()
+plt.grid(True)
+plt.show()
 
-joblib.dump(scaler, "scaler.pkl")
+#MSE
 
-import pickle
-with open("columns.pkl", "wb") as f:
-    pickle.dump(x_all.columns.tolist(), f)
+y_test_pred = model.predict(x_test_scaled).flatten()
+mse = np.mean((y_test.values - y_test_pred) ** 2)
+print("MSE pe TEST:", mse)
+
+#MAE
+from sklearn.metrics import mean_absolute_error
+
+# Predictii pe test
+y_test_pred = model.predict(x_test_scaled).flatten()
+
+# MAE
+mae = mean_absolute_error(y_test, y_test_pred)
+
+print("MAE pe TEST:", mae, "bpm")
+
+#Tabel final corect
+from sklearn.metrics import mean_squared_error, mean_absolute_error
+
+y_test_pred = model.predict(x_test_scaled).flatten()
+
+mse = mean_squared_error(y_test, y_test_pred)
+mae = mean_absolute_error(y_test, y_test_pred)
+rmse = np.sqrt(mse)
+loss_test = mse   # pentru ca loss = MSE
+
+metrics_table = pd.DataFrame({
+    "Metrică": ["LOSS (MSE)", "MSE", "MAE", "RMSE"],
+    "Valoare": [loss_test, mse, mae, rmse]
+})
+
+print("\n=== Tabel metrici finale ===")
+print(metrics_table)
+
+
+
+
+
+
+#model.save("hr_model.h5")
+
+#joblib.dump(scaler, "scaler.pkl")
+
+#import pickle
+#with open("columns.pkl", "wb") as f:
+ #   pickle.dump(x_all.columns.tolist(), f)
