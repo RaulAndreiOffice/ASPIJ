@@ -5,6 +5,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 from sklearn.linear_model import Ridge
+from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
 
 import tensorflow as tf
 from tensorflow import keras
@@ -15,7 +16,7 @@ import joblib
 import pickle
 
 
-#  Load
+
 
 df = pd.read_csv("C:\\Users\\raulb\\Documents\\Licienta\\Set date ai\\DateWhoop.csv")
 
@@ -44,6 +45,9 @@ df = df[cols_to_keep].copy()
 df = df.dropna()
 print("Shape după dropna:", df.shape)
 
+df = df[df["avg_heart_rate"] > 30]
+
+print("Shape după curățare completă:", df.shape)
 
 # 3) Separăm X și y
 
@@ -107,7 +111,7 @@ print(f"MAE:  {ridge_mae:.4f} bpm")
 print(f"RMSE: {ridge_rmse:.4f} bpm")
 
 
-# 7B) MLP (regresie)
+#  MLP (regresie)
 
 model = keras.Sequential([
     layers.Input(shape=(input_dim,)),
@@ -121,20 +125,36 @@ model.compile(
     loss="mse",
     metrics=["mae"]
 )
+#Regula de oprire si ajustare
+early_stop = EarlyStopping(
+    monitor='val_loss',
+    patience=12,          # Așteaptă 12 epoci fără îmbunătățire înainte să se oprească
+    restore_best_weights=True # Păstrează cel mai bun model, nu ultimul
+)
+
+reduce_lr = ReduceLROnPlateau(
+    monitor='val_loss',
+    factor=0.5,           # Înjumătățește rata de învățare
+    patience=5,           # Dacă după 5 epoci loss-ul nu scade
+    min_lr=0.00001
+)
 
 history = model.fit(
     X_train_scaled, y_train,
     validation_data=(X_val_scaled, y_val),
-    epochs=50,
-    batch_size=32,
-    verbose=1
+    epochs=20,
+    batch_size=64,
+    verbose=1,
+    callbacks=[early_stop, reduce_lr]
 )
 
-# Learning curve
+# Learning curve'
+import numpy as np
+
 plt.figure(figsize=(10,6))
 
-plt.plot(history.history['loss'], label='Train Loss (MSE)')
-plt.plot(history.history['val_loss'], label='Validation Loss (MSE)')
+plt.plot(history.history['loss'][1:], label='Train Loss (MSE)')
+plt.plot(history.history['val_loss'][1:], label='Validation Loss (MSE)')
 
 plt.title('Loss Learning Curve')
 plt.xlabel('Epoch')
@@ -168,12 +188,12 @@ plt.grid(True)
 plt.show()
 
 
-# 8) Salvare artefacte pentru microserviciu
+#8) Salvare artefacte pentru microserviciu
 
-#model.save("whoop_avg_hr_model.h5")
-#joblib.dump(scaler, "whoop_scaler.pkl")
+model.save("whoop_avg_hr_model.h5")
+joblib.dump(scaler, "whoop_scaler.pkl")
 
-#with open("whoop_columns.pkl", "wb") as f:
-   # pickle.dump(X_all.columns.tolist(), f)
+with open("whoop_columns.pkl", "wb") as f:
+    pickle.dump(X_all.columns.tolist(), f)
 
 print("\nSalvat: whoop_avg_hr_model.h5, whoop_scaler.pkl, whoop_columns.pkl")
