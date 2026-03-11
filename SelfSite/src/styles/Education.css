@@ -1,0 +1,136 @@
+/* ===== EDUCATION ===== */
+.education {
+    background: var(--bg-primary);
+}
+
+.education__layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+.education__timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.education__card {
+    padding: 1.75rem;
+}
+
+.education__card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.education__dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--gradient-accent);
+    flex-shrink: 0;
+    margin-top: 6px;
+}
+
+.education__institution {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.education__degree {
+    font-size: 0.9rem;
+    color: var(--accent-1);
+    font-weight: 600;
+    margin-top: 0.2rem;
+}
+
+.education__major {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-top: 0.15rem;
+}
+
+.education__period {
+    margin-left: auto;
+    white-space: nowrap;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--accent-1);
+    background: rgba(99, 102, 241, 0.1);
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    flex-shrink: 0;
+}
+
+.education__location {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+}
+
+.education__coursework-label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.education__coursework-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.education__languages-card {
+    padding: 1.5rem;
+}
+
+.education__lang-title {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+    color: var(--text-primary);
+}
+
+.education__lang-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.education__lang-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 0.9rem;
+    background: rgba(99, 102, 241, 0.06);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+}
+
+.education__lang-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.education__lang-level {
+    font-size: 0.78rem;
+    color: var(--accent-1);
+    font-weight: 600;
+    background: rgba(99, 102, 241, 0.1);
+    padding: 0.2rem 0.6rem;
+    border-radius: 50px;
+}
+
+@media (max-width: 900px) {
+    .education__layout {
+        grid-template-columns: 1fr;
+    }
+}

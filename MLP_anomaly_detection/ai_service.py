@@ -1,3 +1,4 @@
+import fastapi
 from fastapi import FastAPI
 from pydantic import BaseModel
 import pandas as pd
@@ -6,29 +7,32 @@ import joblib
 import pickle
 from tensorflow import keras
 
+from FuzzyLogicDetection import fuzzy_injury_risk
+
 app = FastAPI()
 
 # 1. Încărcăm modelul și scaler-ul
-model = keras.models.load_model("hr_model.h5", compile=False)
-scaler = joblib.load("scaler.pkl")
+model = keras.models.load_model("whoop_avg_hr_model.h5", compile=False)
+scaler = joblib.load("whoop_scaler.pkl")
 
-with open("columns.pkl", "rb") as f:
+with open("whoop_columns.pkl", "rb") as f:
     input_columns = pickle.load(f)
 
 
 # 2. Schema datelor primite de la backend
+from pydantic import BaseModel
+
 class PredictRequest(BaseModel):
-    Actual_Weight: float
-    Age: int
-    Duration: float
-    BMI: float
-    Exercise_Intensity: float
-    Gender: str
-    Exercise: str
-    Weather_Conditions: str
-    HeartRate_Measured: float | None = None   # poate lipsi
+    age: int
+    gender: str
+    weight_kg: float
+    height_cm: float
+    resting_heart_rate: float
+    recovery_score: float
+    activity_type: str
+    activity_duration_min: float
 
-
+ 
 @app.post("/predict")
 def predict(req: PredictRequest):
     # 3. Construim DataFrame EXACT ca la antrenare
@@ -66,15 +70,22 @@ def predict(req: PredictRequest):
     diff = None
     anomaly_threshold = 20
 
+    fuzzy_score = None
+
     if req.HeartRate_Measured is not None:
         diff = abs(req.HeartRate_Measured - hr_pred)
-        anomaly = bool(diff > anomaly_threshold)
+
+        fuzzy_result = fuzzy_injury_risk(hr_pred, req.HeartRate_Measured)
+        fuzzy_score = fuzzy_result["risk_score"]
+        anomaly = fuzzy_result["decision"] == "High Risk for Injury"
+
 
     return {
-        "heart_rate_predicted": float(hr_pred),
-        "difference": float(diff) if diff is not None else None,
-        "is_anomaly": anomaly
-    }
+    "heart_rate_predicted": float(hr_pred),
+    "difference": float(diff) if diff is not None else None,
+    "fuzzy_score": float(fuzzy_score) if fuzzy_score is not None else None,
+    "injury_risk": anomaly
+  }
 
 
 if __name__ == "__main__":
