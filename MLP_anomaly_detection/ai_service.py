@@ -4,79 +4,64 @@ import pandas as pd
 import numpy as np
 import joblib
 import pickle
-from tensorflow import keras
+from tensorflow.keras.models import load_model
 
 app = FastAPI()
 
-# 1. Încărcăm modelul și scaler-ul
-model = keras.models.load_model("hr_model.h5", compile=False)
-scaler = joblib.load("scaler.pkl")
+model = load_model("whoop_avg_hr_model.h5")
+scaler = joblib.load("whoop_scaler.pkl")
 
-with open("columns.pkl", "rb") as f:
-    input_columns = pickle.load(f)
+with open("whoop_columns.pkl", "rb") as f:
+    trained_columns = pickle.load(f)
 
 
-# 2. Schema datelor primite de la backend
 class PredictRequest(BaseModel):
-    Actual_Weight: float
-    Age: int
-    Duration: float
-    BMI: float
-    Exercise_Intensity: float
-    Gender: str
-    Exercise: str
-    Weather_Conditions: str
-    HeartRate_Measured: float | None = None   # poate lipsi
+    age: int
+    gender: str
+    weight_kg: float
+    height_cm: float
+    resting_heart_rate: float | None = None
+    recovery_score: float | None = None
+    activity_type: str
+    activity_duration_min: float
+    heart_rate_measured: float | None = None
 
 
 @app.post("/predict")
 def predict(req: PredictRequest):
-    # 3. Construim DataFrame EXACT ca la antrenare
-    data = {
-        "Actual Weight": req.Actual_Weight,
-        "Age": req.Age,
-        "Duration": req.Duration,
-        "BMI": req.BMI,
-        "Exercise Intensity": req.Exercise_Intensity,
-        "Gender": req.Gender,
-        "Exercise": req.Exercise,
-        "Weather Conditions": req.Weather_Conditions,
-    }
-    df = pd.DataFrame([data])
+    resting_hr = req.resting_heart_rate if req.resting_heart_rate is not None else 60.0
+    recovery = req.recovery_score if req.recovery_score is not None else 50.0
 
-    # 4. Categorice + numerice (la fel ca în scriptul de training)
-    categorical_cols = ["Gender", "Exercise", "Weather Conditions"]
-    numeric_cols = ["Actual Weight", "Age", "Duration", "BMI", "Exercise Intensity"]
+    raw_input = pd.DataFrame([{
+        "age": req.age,
+        "gender": req.gender,
+        "weight_kg": req.weight_kg,
+        "height_cm": req.height_cm,
+        "resting_heart_rate": resting_hr,
+        "recovery_score": recovery,
+        "activity_type": req.activity_type,
+        "activity_duration_min": req.activity_duration_min
+    }])
 
-    x_categ = pd.get_dummies(df[categorical_cols], drop_first=False)
-    x_num = df[numeric_cols]
-    x_all = pd.concat([x_num, x_categ], axis=1)
+    categorical_cols = ["gender", "activity_type"]
+    raw_encoded = pd.get_dummies(raw_input, columns=categorical_cols)
 
-    # 5. Aliniem cu coloanele de la antrenare
-    x_all = x_all.reindex(columns=input_columns, fill_value=0)
+    for col in trained_columns:
+        if col not in raw_encoded.columns:
+            raw_encoded[col] = 0
 
-    # 6. Scalare
-    x_scaled = scaler.transform(x_all)
+    raw_encoded = raw_encoded[trained_columns]
 
-    # 7. Predicție
-    hr_pred = model.predict(x_scaled).flatten()[0]
+    X_scaled = scaler.transform(raw_encoded)
+    bpm_pred = float(model.predict(X_scaled, verbose=0)[0][0])
 
-    # 8. Anomalie (dacă avem puls măsurat)
-    anomaly = None
-    diff = None
-    anomaly_threshold = 20
-
-    if req.HeartRate_Measured is not None:
-        diff = abs(req.HeartRate_Measured - hr_pred)
-        anomaly = bool(diff > anomaly_threshold)
-
-    return {
-        "heart_rate_predicted": float(hr_pred),
-        "difference": float(diff) if diff is not None else None,
-        "is_anomaly": anomaly
+    response = {
+        "predicted_avg_heart_rate": round(bpm_pred, 2)
     }
 
+    if req.heart_rate_measured is not None:
+        delta = abs(bpm_pred - req.heart_rate_measured)
+        response["heart_rate_measured"] = req.heart_rate_measured
+        response["delta_bpm"] = round(delta, 2)
 
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run("ai_service:app", host="127.0.0.1", port=8000, reload=True)
+    return response
