@@ -15,10 +15,10 @@ with open("whoop_columns.pkl", "rb") as f:
     trained_columns = pickle.load(f)
 
 
-# ---------------------------------------------------------------------------
+
 # FUZZY LOGIC HELPERS
 # Triangular membership function: returns degree [0.0 – 1.0]
-# ---------------------------------------------------------------------------
+
 
 def trimf(x: float, a: float, b: float, c: float) -> float:
     """Triangular membership: 0 at a, peak 1 at b, 0 at c."""
@@ -40,7 +40,7 @@ def trapmf(x: float, a: float, b: float, c: float, d: float) -> float:
     return (d - x) / (d - c)
 
 
-# ---------------------------------------------------------------------------
+
 # FUZZY RULE 1 – INJURY RISK
 # Input:  delta_bpm  (|predicted − measured|)
 # Output: injury_risk_score  0–100  →  label + advice
@@ -49,7 +49,7 @@ def trapmf(x: float, a: float, b: float, c: float, d: float) -> float:
 #   low    [0, 0, 5, 10]   – normal variation, no concern
 #   medium [5, 15, 25]     – elevated, monitor closely
 #   high   [20, 30, 999]   – significant overload / injury risk
-# ---------------------------------------------------------------------------
+
 
 def fuzzy_injury_risk(delta_bpm: float) -> dict:
     mu_low    = trapmf(delta_bpm, 0,  0,  5,  10)
@@ -92,7 +92,7 @@ def fuzzy_injury_risk(delta_bpm: float) -> dict:
     }
 
 
-# ---------------------------------------------------------------------------
+
 # FUZZY RULE 2 – UNDER-TRAINING
 # Input:  measured_bpm  (absolute heart rate during activity)
 # Output: under_training_score  0–100  →  label + advice
@@ -105,7 +105,7 @@ def fuzzy_injury_risk(delta_bpm: float) -> dict:
 #   low        [90, 100, 115]      – light effort
 #   moderate   [110, 130, 150]     – aerobic zone, healthy
 #   high       [145, 165, 999]     – intense, possible overload
-# ---------------------------------------------------------------------------
+
 
 def fuzzy_under_training(measured_bpm: float) -> dict:
     mu_very_low = trapmf(measured_bpm, 0,   0,   90,  100)
@@ -164,9 +164,9 @@ def fuzzy_under_training(measured_bpm: float) -> dict:
     }
 
 
-# ---------------------------------------------------------------------------
+
 # REQUEST / RESPONSE MODEL
-# ---------------------------------------------------------------------------
+
 
 class PredictRequest(BaseModel):
     age: int
@@ -180,9 +180,9 @@ class PredictRequest(BaseModel):
     heart_rate_measured: float | None = None
 
 
-# ---------------------------------------------------------------------------
+
 # ENDPOINT
-# ---------------------------------------------------------------------------
+
 
 @app.post("/predict")
 def predict(req: PredictRequest):
@@ -216,7 +216,7 @@ def predict(req: PredictRequest):
         "predicted_avg_heart_rate": round(bpm_pred, 2),
     }
 
-    # ── Fuzzy logic ────────────────────────────────────────────────────────
+    #  Fuzzy logic 
     if req.heart_rate_measured is not None:
         delta = abs(bpm_pred - req.heart_rate_measured)
 
