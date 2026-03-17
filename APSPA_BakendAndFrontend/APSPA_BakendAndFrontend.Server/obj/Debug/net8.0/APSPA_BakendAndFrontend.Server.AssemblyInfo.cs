@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("APSPA_BakendAndFrontend.Server")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8ca9443f194ced76abe5bde4b88345c37ba92158")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a9a98d5283458f8a52831303c3405594f7f0a607")]
 [assembly: System.Reflection.AssemblyProductAttribute("APSPA_BakendAndFrontend.Server")]
 [assembly: System.Reflection.AssemblyTitleAttribute("APSPA_BakendAndFrontend.Server")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

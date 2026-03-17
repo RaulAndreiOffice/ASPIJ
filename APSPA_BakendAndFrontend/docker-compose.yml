@@ -1,0 +1,33 @@
+﻿version: '3.9'
+
+services:
+
+  postgres:
+    image: postgres:16
+    container_name: apspa_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: apspa_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: parola123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  api:
+    build:
+      context: ./APSPA_BakendAndFrontend.Server
+      dockerfile: Dockerfile
+    container_name: apspa_api
+    restart: always
+    ports:
+      - "5000:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=apspa_db;Username=postgres;Password=parola123
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
