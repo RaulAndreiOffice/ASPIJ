@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\raulb\\Documents\\Licienta\\Proiect\\APSPA_BakendAndFrontend\\APSPA_BakendAndFrontend.Server\\APSPA_BakendAndFrontend.Server.csproj": {}
+    "C:\\Users\\raulb\\Documents\\Licienta\\APSPA\\ASPIJ\\APSPA_BakendAndFrontend\\APSPA_BakendAndFrontend.Server\\APSPA_BakendAndFrontend.Server.csproj": {}
   },
   "projects": {
-    "C:\\Users\\raulb\\Documents\\Licienta\\Proiect\\APSPA_BakendAndFrontend\\APSPA_BakendAndFrontend.Server\\APSPA_BakendAndFrontend.Server.csproj": {
+    "C:\\Users\\raulb\\Documents\\Licienta\\APSPA\\ASPIJ\\APSPA_BakendAndFrontend\\APSPA_BakendAndFrontend.Server\\APSPA_BakendAndFrontend.Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\raulb\\Documents\\Licienta\\Proiect\\APSPA_BakendAndFrontend\\APSPA_BakendAndFrontend.Server\\APSPA_BakendAndFrontend.Server.csproj",
+        "projectUniqueName": "C:\\Users\\raulb\\Documents\\Licienta\\APSPA\\ASPIJ\\APSPA_BakendAndFrontend\\APSPA_BakendAndFrontend.Server\\APSPA_BakendAndFrontend.Server.csproj",
         "projectName": "APSPA_BakendAndFrontend.Server",
-        "projectPath": "C:\\Users\\raulb\\Documents\\Licienta\\Proiect\\APSPA_BakendAndFrontend\\APSPA_BakendAndFrontend.Server\\APSPA_BakendAndFrontend.Server.csproj",
+        "projectPath": "C:\\Users\\raulb\\Documents\\Licienta\\APSPA\\ASPIJ\\APSPA_BakendAndFrontend\\APSPA_BakendAndFrontend.Server\\APSPA_BakendAndFrontend.Server.csproj",
         "packagesPath": "C:\\Users\\raulb\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\raulb\\Documents\\Licienta\\Proiect\\APSPA_BakendAndFrontend\\APSPA_BakendAndFrontend.Server\\obj\\",
+        "outputPath": "C:\\Users\\raulb\\Documents\\Licienta\\APSPA\\ASPIJ\\APSPA_BakendAndFrontend\\APSPA_BakendAndFrontend.Server\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -45,7 +45,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.300"
+        "SdkAnalysisLevel": "10.0.200"
       },
       "frameworks": {
         "net8.0": {
@@ -54,6 +54,12 @@
             "Microsoft.AspNetCore.SpaProxy": {
               "target": "Package",
               "version": "[8.*-*, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.0, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
@@ -93,7 +99,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.200/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

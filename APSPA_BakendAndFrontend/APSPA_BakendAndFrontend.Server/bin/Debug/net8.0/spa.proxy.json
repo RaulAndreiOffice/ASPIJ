@@ -3,7 +3,7 @@
 "ServerUrl": "https://localhost:62315",
 "RedirectUrl": "",
 "LaunchCommand": "npm run dev",
-"WorkingDirectory": "C:\\Users\\raulb\\Documents\\Licienta\\Proiect\\APSPA_BakendAndFrontend\\APSPA_BakendAndFrontend.Server\\..\\apspa_bakendandfrontend.client",
+"WorkingDirectory": "C:\\Users\\raulb\\Documents\\Licienta\\APSPA\\ASPIJ\\APSPA_BakendAndFrontend\\APSPA_BakendAndFrontend.Server\\..\\apspa_bakendandfrontend.client",
 "MaxTimeoutInSeconds": "120",
 "KeepRunning": "false"
 }
