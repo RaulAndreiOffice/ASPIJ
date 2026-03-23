@@ -6,13 +6,15 @@ import joblib
 import pickle
 from tensorflow import keras
 
+from fuzzy_logic import evaluate as fuzzy_evaluate
+
 app = FastAPI()
 
 # 1. Încărcăm modelul și scaler-ul
-model = keras.models.load_model("hr_model.h5", compile=False)
-scaler = joblib.load("scaler.pkl")
+model = keras.models.load_model("whoop_avg_hr_model.h5", compile=False)
+scaler = joblib.load("whoop_scaler.pkl")
 
-with open("columns.pkl", "rb") as f:
+with open("whoop_columns.pkl", "rb") as f:
     input_columns = pickle.load(f)
 
 
@@ -70,10 +72,20 @@ def predict(req: PredictRequest):
         diff = abs(req.HeartRate_Measured - hr_pred)
         anomaly = bool(diff > anomaly_threshold)
 
+    # 9. Fuzzy logic interpretation (does NOT touch ML pipeline)
+    fuzzy = fuzzy_evaluate(
+        heart_rate_predicted=float(hr_pred),
+        difference=float(diff) if diff is not None else None,
+        is_anomaly=anomaly,
+    )
+
     return {
         "heart_rate_predicted": float(hr_pred),
         "difference": float(diff) if diff is not None else None,
-        "is_anomaly": anomaly
+        "is_anomaly": anomaly,
+        "effort_level": fuzzy.effort_level,
+        "fatigue_risk": fuzzy.fatigue_risk,
+        "recommendation": fuzzy.recommendation,
     }
 
 
