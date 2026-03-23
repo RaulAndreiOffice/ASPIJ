@@ -40,8 +40,8 @@ namespace APSPA_BakendAndFrontend.Server.Migrations
 
                     b.Property<string>("ActivityType")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("activity_type");
 
                     b.Property<int?>("CaloriesBurned")
@@ -51,6 +51,10 @@ namespace APSPA_BakendAndFrontend.Server.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
+
+                    b.Property<float?>("MeasuredHeartRate")
+                        .HasColumnType("real")
+                        .HasColumnName("measured_heart_rate");
 
                     b.Property<string>("Notes")
                         .HasColumnType("text")
@@ -76,6 +80,11 @@ namespace APSPA_BakendAndFrontend.Server.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("integer")
                         .HasColumnName("user_id");
+
+                    b.Property<string>("WeatherConditions")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("weather_conditions");
 
                     b.HasKey("Id");
 
@@ -244,17 +253,27 @@ namespace APSPA_BakendAndFrontend.Server.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
 
-                    b.Property<decimal?>("EffortScore")
+                    b.Property<decimal?>("Difference")
                         .HasColumnType("numeric(8,2)")
-                        .HasColumnName("effort_score");
+                        .HasColumnName("difference");
+
+                    b.Property<string>("EffortLevel")
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)")
+                        .HasColumnName("effort_level");
 
                     b.Property<string>("ErrorMessage")
                         .HasColumnType("text")
                         .HasColumnName("error_message");
 
-                    b.Property<decimal?>("FatigueRiskScore")
-                        .HasColumnType("numeric(8,2)")
-                        .HasColumnName("fatigue_risk_score");
+                    b.Property<string>("FatigueRisk")
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)")
+                        .HasColumnName("fatigue_risk");
+
+                    b.Property<bool?>("IsAnomaly")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_anomaly");
 
                     b.Property<decimal?>("PredictedAvgHeartRate")
                         .HasColumnType("numeric(8,2)")
@@ -274,6 +293,10 @@ namespace APSPA_BakendAndFrontend.Server.Migrations
                         .HasColumnType("jsonb")
                         .HasColumnName("raw_output_payload");
 
+                    b.Property<string>("Recommendation")
+                        .HasColumnType("text")
+                        .HasColumnName("recommendation");
+
                     b.Property<int>("UserId")
                         .HasColumnType("integer")
                         .HasColumnName("user_id");
@@ -287,46 +310,6 @@ namespace APSPA_BakendAndFrontend.Server.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("predictions", (string)null);
-                });
-
-            modelBuilder.Entity("APSPA_BakendAndFrontend.Server.model.Recommendation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
-
-                    b.Property<string>("Level")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("character varying(20)")
-                        .HasColumnName("level");
-
-                    b.Property<string>("Message")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("message");
-
-                    b.Property<int>("PredictionId")
-                        .HasColumnType("integer")
-                        .HasColumnName("prediction_id");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("character varying(150)")
-                        .HasColumnName("title");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PredictionId");
-
-                    b.ToTable("recommendations", (string)null);
                 });
 
             modelBuilder.Entity("APSPA_BakendAndFrontend.Server.model.RefreshToken", b =>
@@ -544,17 +527,6 @@ namespace APSPA_BakendAndFrontend.Server.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("APSPA_BakendAndFrontend.Server.model.Recommendation", b =>
-                {
-                    b.HasOne("APSPA_BakendAndFrontend.Server.model.Prediction", "Prediction")
-                        .WithMany("Recommendations")
-                        .HasForeignKey("PredictionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Prediction");
-                });
-
             modelBuilder.Entity("APSPA_BakendAndFrontend.Server.model.RefreshToken", b =>
                 {
                     b.HasOne("APSPA_BakendAndFrontend.Server.model.User", "User")
@@ -590,8 +562,6 @@ namespace APSPA_BakendAndFrontend.Server.Migrations
             modelBuilder.Entity("APSPA_BakendAndFrontend.Server.model.Prediction", b =>
                 {
                     b.Navigation("AiRequestLogs");
-
-                    b.Navigation("Recommendations");
                 });
 
             modelBuilder.Entity("APSPA_BakendAndFrontend.Server.model.User", b =>

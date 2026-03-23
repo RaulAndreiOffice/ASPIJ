@@ -1,13 +1,11 @@
-﻿using APSPA_BakendAndFrontend.Server.model;
+using APSPA_BakendAndFrontend.Server.model;
 using Microsoft.EntityFrameworkCore;
 
 namespace APSPA_BakendAndFrontend.Server.Data
 {
     public class AppDbContext : DbContext
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-        {
-        }
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<User> Users => Set<User>();
         public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
@@ -15,7 +13,6 @@ namespace APSPA_BakendAndFrontend.Server.Data
         public DbSet<ActivityRecord> ActivityRecords => Set<ActivityRecord>();
         public DbSet<AiModel> AiModels => Set<AiModel>();
         public DbSet<Prediction> Predictions => Set<Prediction>();
-        public DbSet<Recommendation> Recommendations => Set<Recommendation>();
         public DbSet<AiRequestLog> AiRequestLogs => Set<AiRequestLog>();
         public DbSet<AuditLog> AuditLogs => Set<AuditLog>();
 
@@ -89,6 +86,8 @@ namespace APSPA_BakendAndFrontend.Server.Data
                 entity.Property(e => e.RecoveryScore).HasColumnName("recovery_score");
                 entity.Property(e => e.CaloriesBurned).HasColumnName("calories_burned");
                 entity.Property(e => e.PerceivedIntensity).HasColumnName("perceived_intensity");
+                entity.Property(e => e.WeatherConditions).HasColumnName("weather_conditions");
+                entity.Property(e => e.MeasuredHeartRate).HasColumnName("measured_heart_rate");
                 entity.Property(e => e.Notes).HasColumnName("notes");
                 entity.Property(e => e.CreatedAt).HasColumnName("created_at");
                 entity.Property(e => e.UpdatedAt).HasColumnName("updated_at");
@@ -118,8 +117,11 @@ namespace APSPA_BakendAndFrontend.Server.Data
                 entity.Property(e => e.ActivityRecordId).HasColumnName("activity_record_id");
                 entity.Property(e => e.AiModelId).HasColumnName("ai_model_id");
                 entity.Property(e => e.PredictedAvgHeartRate).HasColumnName("predicted_avg_heart_rate").HasColumnType("numeric(8,2)");
-                entity.Property(e => e.EffortScore).HasColumnName("effort_score").HasColumnType("numeric(8,2)");
-                entity.Property(e => e.FatigueRiskScore).HasColumnName("fatigue_risk_score").HasColumnType("numeric(8,2)");
+                entity.Property(e => e.EffortLevel).HasColumnName("effort_level");
+                entity.Property(e => e.FatigueRisk).HasColumnName("fatigue_risk");
+                entity.Property(e => e.Recommendation).HasColumnName("recommendation");
+                entity.Property(e => e.Difference).HasColumnName("difference").HasColumnType("numeric(8,2)");
+                entity.Property(e => e.IsAnomaly).HasColumnName("is_anomaly");
                 entity.Property(e => e.PredictionStatus).HasColumnName("prediction_status");
                 entity.Property(e => e.RawInputPayload).HasColumnName("raw_input_payload").HasColumnType("jsonb");
                 entity.Property(e => e.RawOutputPayload).HasColumnName("raw_output_payload").HasColumnType("jsonb");
@@ -141,22 +143,6 @@ namespace APSPA_BakendAndFrontend.Server.Data
                     .WithMany(m => m.Predictions)
                     .HasForeignKey(e => e.AiModelId)
                     .OnDelete(DeleteBehavior.SetNull);
-            });
-
-            modelBuilder.Entity<Recommendation>(entity =>
-            {
-                entity.ToTable("recommendations");
-                entity.HasKey(e => e.Id);
-                entity.Property(e => e.PredictionId).HasColumnName("prediction_id");
-                entity.Property(e => e.Level).HasColumnName("level");
-                entity.Property(e => e.Title).HasColumnName("title");
-                entity.Property(e => e.Message).HasColumnName("message");
-                entity.Property(e => e.CreatedAt).HasColumnName("created_at");
-
-                entity.HasOne(e => e.Prediction)
-                    .WithMany(p => p.Recommendations)
-                    .HasForeignKey(e => e.PredictionId)
-                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<AiRequestLog>(entity =>
