@@ -1,0 +1,14 @@
+# Secrets
+.env
+
+# Build output
+bin/
+obj/
+
+# Dependencies
+node_modules/
+.venv/
+__pycache__/
+
+# IDE
+.vs/
