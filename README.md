@@ -1,184 +1,210 @@
-# Sports Performance Analysis and Injury Prevention Platform
-## Overview
+# ASPA – Fitness Monitor
 
-This project is a web-based platform designed to analyze athletes' performance data and help prevent injuries using data analysis and artificial intelligence techniques. The application collects physiological and activity-related data from athletes (either manually entered or imported from wearable devices) and processes it to provide insights about training load, recovery, and potential injury risks.
+**Sports performance analysis and injury prevention platform** · Bachelor's thesis project
 
-The system combines modern web technologies with machine learning models to assist athletes and coaches in optimizing training routines and monitoring physical condition.
+ASPA monitors a workout in real time. A MAX30102 pulse-oximetry sensor on a Raspberry Pi Pico streams heart rate and SpO2 to an ASP.NET Core backend, which pushes every reading live to a React dashboard. Before the workout, a neural network predicts the heart rate the athlete should train at. During it, a fuzzy-logic engine rates injury and under-training risk and warns when the heart rate leaves the target zone. Afterwards, the session gets a fatigue score, a recovery time and a training load (TRIMP).
 
-The goal of the platform is to:
+<p align="center">
+  <img src="docs/screenshots/cover.png" alt="ASPA live monitoring dashboard" width="720">
+</p>
 
-Analyze athlete performance metrics
+---
 
-Predict physiological indicators using machine learning
+## Features
 
-Identify potential risk factors related to fatigue or overtraining
+**Live monitoring**
+- Heart rate and SpO2 from the MAX30102 sensor, shown as they arrive (raw signal, not averaged)
+- Sensor status: online, waiting for the sensor, or stale signal when the Pico stops sending valid beats
+- Resting heart rate and a fitness score (0–100) based on session history and training frequency
 
-Support better decision-making for training optimization and injury prevention
+**Training setup**
+- Activity: running, cycling, swimming or walking
+- Weather: windy, hot, sunny, rainy, cold or cloudy
+- Intensity (low → very high), planned duration and "how rested do you feel today" (0–100)
+- A live sensor check before the session starts
 
-The idea of the platform is based on collecting performance-related data from wearable devices such as smart watches or fitness trackers, or through manual input provided by the user. 
+**AI and fuzzy logic**
+- **Recommended BPM**: a Keras MLP predicts the target heart rate for this athlete, activity and conditions
+- **Anomaly detection**: the measured heart rate is compared with the prediction (a gap over 20 bpm is flagged)
+- **Fuzzy-logic assessment**: effort level, fatigue risk, injury risk and under-training, updated live
+- **Live alerts** when the heart rate goes above the target zone
 
+**Post-session assessment**
+- Fatigue score, session quality and recommended recovery time
+- TRIMP (Edwards) training load and time spent in each heart-rate zone (Z1–Z5)
+- Number of live warnings, time in the red zone and how far the heart rate drifted from the prediction
 
+**Platform**
+- Accounts with JWT access tokens and refresh tokens, plus an Admin role
+- Activity history, saved predictions and the user's health profile
+- Swagger UI for the REST API
 
-## System Architecture
+---
 
-The project is composed of multiple components:
+## Screenshots
 
-1. Web Application
+| Live session | Training setup |
+|---|---|
+| ![Live session](docs/screenshots/live-session.png) | ![Create a training](docs/screenshots/create-training.png) |
 
-The web platform allows users to interact with the system and visualize their performance data.
+**Above the target zone:** the dashboard warns the athlete as soon as the heart rate leaves the zone the model recommended.
 
-Technologies used:
+![Zone warning](docs/screenshots/zone-warning.png)
 
-ASP.NET Core / .NET
+---
 
-Angular
+## Architecture
 
-SignalR (for real-time updates)
+```mermaid
+flowchart LR
+    S["MAX30102 sensor"] --> P["Raspberry Pi Pico"]
+    P -- "heart rate, SpO2" --> API["ASP.NET Core 8 API"]
+    API <--> DB[("PostgreSQL")]
+    API -- "POST /predict" --> AI["Python FastAPI service<br/>Keras MLP + fuzzy logic"]
+    API -- "SignalR (live)<br/>REST (JWT)" --> UI["React dashboard"]
+```
 
-SQL Server (SSMS) for data storage
+| Part | Technology |
+|---|---|
+| Frontend | React 19, TypeScript, Vite |
+| Backend | ASP.NET Core 8 Web API, SignalR, Entity Framework Core, JWT authentication, Swagger |
+| Database | PostgreSQL 16 (Npgsql) |
+| AI service | Python, FastAPI, TensorFlow/Keras, scikit-learn, pandas |
+| Hardware | Raspberry Pi Pico, MAX30102 heart-rate and SpO2 sensor |
+| DevOps | Docker, Docker Compose |
 
-Main features include:
+The backend follows a layered structure: **Controllers → Services → Repositories → EF Core**. It calls the AI service through a typed `HttpClient`, and every AI request is logged in the database.
 
-User data input and management
+---
 
-Activity and physiological data tracking
+## AI model
 
-Visualization of performance metrics
+The model predicts the **average heart rate** of an activity from the athlete's profile and the training context.
 
-Integration with the AI prediction service
+| | |
+|---|---|
+| Inputs | weight, age, BMI, gender, activity type, duration, intensity, weather |
+| Preprocessing | missing values removed, one-hot encoding for categorical features, `StandardScaler` |
+| Network | Dense 64 (ReLU) → Dense 32 (ReLU) → Dense 1 (linear) |
+| Training | Adam optimizer, MSE loss, MAE metric, early stopping |
+| Data split | 70% training · 20% validation · 10% test |
+| Baseline | Ridge regression, used to measure how much the neural network adds |
 
-Artificial Intelligence Module
+The fuzzy-logic layer (`fuzzy_logic.py`) sits on top of the model. It is deliberately kept separate from the ML pipeline. It uses triangular and trapezoidal membership functions over the predicted heart rate and the measured-vs-predicted difference, and returns:
 
-The AI component analyzes athlete data and predicts physiological indicators that can help evaluate training intensity and recovery status.
+- `effort_level`: low, moderate, high or extreme
+- `fatigue_risk`: low, medium or high
+- `recommendation`: a short training recommendation
 
-The current model predicts average heart rate during an activity based on several physiological and contextual parameters.
+---
 
-## Input Features
-
-The model uses the following attributes:
-
-Age
-
-Gender
-
-Weight
-
-Height
-
-Resting heart rate
-
-Recovery score
-
-Activity type
-
-Activity duration
-
-The target variable predicted by the model is:
-
-Average heart rate during the activity
-
-The dataset is cleaned, encoded, and normalized before training. 
-
-Modelare_whoopDataset
-
-## Machine Learning Model
-
-Two approaches are implemented:
-
-1. Baseline Model
-
-A Ridge Regression model is used as a baseline to evaluate the performance of the neural network.
-
-2. Neural Network (MLP)
-
-A Multilayer Perceptron (MLP) built with TensorFlow/Keras is used to learn nonlinear relationships between athlete characteristics and physiological responses.
-
-## Network architecture:
-
-Input layer
-
-Dense layer (64 neurons, ReLU)
-
-Dense layer (32 neurons, ReLU)
-
-Output layer (1 neuron – regression output)
-
-The model is trained using:
-
-Adam optimizer
-
-Mean Squared Error (MSE) loss
-
-Mean Absolute Error (MAE) metric
-
-The dataset is split into:
-
-70% training
-
-20% validation
-
-10% test data
-
-The trained model can later be exported and integrated into a microservice for real-time predictions. 
-
-Modelare_whoopDataset
-
-Data Processing Pipeline
-
-The machine learning pipeline includes:
-
-Dataset loading
-
-Data cleaning (removal of missing values)
-
-Feature selection
-
-One-hot encoding for categorical features
-
-Feature scaling using StandardScaler
-
-Model training
-
-Model evaluation
-
-Visualization of results (learning curves and prediction plots)
-
-The model performance is evaluated using:
-
-Mean Squared Error (MSE)
-
-Mean Absolute Error (MAE)
-
-Root Mean Squared Error (RMSE)
-
-Data Visualization
-
-The system generates visualizations such as:
-
-Training vs validation loss curves
-
-Real vs predicted heart rate scatter plots
-
-These visualizations help evaluate the model’s learning behavior and prediction accuracy.
-
-Future Improvements
-
-Possible future improvements include:
-
-Integration with real wearable device APIs
-
-Advanced injury risk prediction models
-
-Additional physiological indicators (HRV, sleep, fatigue)
-
-Personalized training recommendations
-
-Deployment of the AI model as a REST microservice
-
-Implementation of fuzzy logic systems for injury risk evaluation
-
-Project Purpose
-
-This project was developed as part of a Bachelor's thesis focused on applying artificial intelligence in sports performance analysis and injury prevention.
-
-The platform demonstrates how machine learning and modern web technologies can be combined to create intelligent systems that support athletes and coaches in monitoring performance and improving training safety.
+## API
+
+All endpoints except register, login and refresh need a `Bearer` token.
+
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/api/auth/register` | Create an account |
+| POST | `/api/auth/login` | Log in, returns access and refresh tokens |
+| POST | `/api/auth/refresh` | Get a new access token |
+| POST | `/api/auth/change-password` | Change the password |
+| GET / PUT | `/api/profile` | Read or update the health profile |
+| GET / POST | `/api/activities` | List or create activities |
+| GET / PUT / DELETE | `/api/activities/{id}` | Read, update or delete an activity |
+| POST | `/api/predictions/run/{activityId}` | Run the AI prediction for an activity |
+| GET | `/api/predictions` | List predictions |
+| GET | `/api/predictions/{id}` | Read a prediction |
+| GET | `/api/predictions/activity/{activityId}` | Predictions for one activity |
+| GET | `/api/admin/users` · `/activities` · `/predictions` | Admin overview (Admin role only) |
+
+The AI service has a single endpoint, `POST http://localhost:8000/predict`.
+
+---
+
+## Getting started
+
+### Prerequisites
+
+- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
+- [Node.js](https://nodejs.org/) 20 or newer
+- Python 3.12
+- PostgreSQL 16, or Docker to run it in a container
+
+### 1. Database
+
+```bash
+cd APSPA_BakendAndFrontend
+docker compose up -d postgres
+```
+
+### 2. Backend configuration
+
+Keep the connection string and JWT secret out of `appsettings.json` and store them as user secrets:
+
+```bash
+cd APSPA_BakendAndFrontend/APSPA_BakendAndFrontend.Server
+dotnet user-secrets init
+dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Host=localhost;Port=5432;Database=apspa_db;Username=postgres;Password=<your-password>"
+dotnet user-secrets set "Jwt:Secret" "<a random string of at least 32 characters>"
+dotnet ef database update
+```
+
+### 3. AI service
+
+```bash
+cd MLP_anomaly_detection
+python -m venv .venv
+.venv\Scripts\activate        # on macOS/Linux: source .venv/bin/activate
+pip install -r requirements.txt
+uvicorn ai_service:app --port 8000
+```
+
+The trained model (`whoop_avg_hr_model.h5`), the scaler and the column list are already in the folder. To retrain the model, run `Modelare_whoopDataset.py`.
+
+### 4. Backend and frontend
+
+```bash
+cd APSPA_BakendAndFrontend/APSPA_BakendAndFrontend.Server
+dotnet run --launch-profile https
+```
+
+The SPA proxy starts the Vite dev server automatically.
+
+| Service | URL |
+|---|---|
+| Web app | https://localhost:62315 |
+| API | https://localhost:7266 |
+| Swagger | https://localhost:7266/swagger |
+| AI service | http://localhost:8000/docs |
+
+---
+
+## Project structure
+
+```
+ASPIJ/
+├── APSPA_BakendAndFrontend/
+│   ├── APSPA_BakendAndFrontend.Server/    ASP.NET Core API
+│   │   ├── Controllers/                   REST endpoints
+│   │   ├── Services/                      business logic
+│   │   ├── Repositories/                  data access
+│   │   ├── Clients/                       HTTP client for the AI service
+│   │   ├── Data/                          EF Core DbContext
+│   │   ├── DTOs/                          request and response models
+│   │   ├── model/                         database entities
+│   │   └── Middleware/                    global exception handling
+│   ├── apspa_bakendandfrontend.client/    React + TypeScript dashboard
+│   └── docker-compose.yml
+├── MLP_anomaly_detection/                 Python AI service
+│   ├── ai_service.py                      FastAPI /predict endpoint
+│   ├── fuzzy_logic.py                     fuzzy-logic interpretation layer
+│   ├── Modelare_whoopDataset.py           model training (MLP + Ridge baseline)
+│   └── whoop_avg_hr_model.h5              trained model
+└── docs/screenshots/
+```
+
+---
+
+## Author
+
+Built by [@RaulAndreiOffice](https://github.com/RaulAndreiOffice) as a bachelor's thesis project.
